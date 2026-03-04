@@ -1,0 +1,46 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: ORDER-SERVICE
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/orderdb
+    username: root
+    password: Goodluck@124
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update  
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+eureka:
+  instance:
+    instance-id: ORDER-SERVICE:${server.port}
+    prefer-ip-address: true
+
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+
+resilience4j:
+ circuitbreaker:
+  instances:
+   userService:
+    slidingWindowSize: 5
+    failureRateThreshold: 50
+    waitDurationInOpenState: 10s
