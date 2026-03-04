@@ -8,7 +8,6 @@ pipeline {
     environment {
         DB_USERNAME = credentials('db-username')
         DB_PASSWORD = credentials('db-password')
-        JWT_SECRET  = credentials('jwt-secret')
     }
 
     stages {
