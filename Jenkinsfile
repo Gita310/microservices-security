@@ -26,7 +26,7 @@ pipeline {
         sh 'cd order-service && mvn clean install -DskipTests'
         sh 'cd gateway-service && mvn clean install -DskipTests'
         sh 'cd discovery-service && mvn clean install -DskipTests'
-        sh 'cd config-services && mvn clean install -DskipTests'
+        sh 'cd config-service && mvn clean install -DskipTests'
    	    }
         }
 
