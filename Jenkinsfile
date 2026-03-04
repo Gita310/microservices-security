@@ -20,10 +20,14 @@ pipeline {
             }
         }
 
-        stage('Build Parent Project') {
+        stage('Build Services') {
             steps {
-                sh 'mvn clean install -DskipTests'
-            }
+        sh 'cd auth-service && mvn clean install -DskipTests'
+        sh 'cd order-service && mvn clean install -DskipTests'
+        sh 'cd gateway-service && mvn clean install -DskipTests'
+        sh 'cd discovery-service && mvn clean install -DskipTests'
+        sh 'cd config-server && mvn clean install -DskipTests'
+   	    }
         }
 
         stage('Build Docker Images') {
