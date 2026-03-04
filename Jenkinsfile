@@ -26,7 +26,7 @@ pipeline {
         sh 'cd order-service && mvn clean install -DskipTests'
         sh 'cd gateway-service && mvn clean install -DskipTests'
         sh 'cd discovery-service && mvn clean install -DskipTests'
-        sh 'cd config-server && mvn clean install -DskipTests'
+        sh 'cd config-services && mvn clean install -DskipTests'
    	    }
         }
 
@@ -36,7 +36,7 @@ pipeline {
                 sh 'docker build -t order-service ./order-service'
                 sh 'docker build -t gateway-service ./gateway-service'
                 sh 'docker build -t discovery-service ./discovery-service'
-                sh 'docker build -t config-server ./config-server'
+                sh 'docker build -t config-service ./config-service'
             }
         }
     }
