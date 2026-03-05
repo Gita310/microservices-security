@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservices-ingress
+  namespace: microservice-security
+spec:
+  rules:
+  - host: microservices.local
+    http:
+      paths:
+
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 8082
+
+      - path: /order
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 8086
