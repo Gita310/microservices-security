@@ -19,6 +19,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+  cloud:
+    config:
+      fail-fast: false
+      retry:
+        max-attempts: 10
+        initial-interval: 2000
 eureka:
   instance:
     instance-id: ORDER-SERVICE:${server.port}
