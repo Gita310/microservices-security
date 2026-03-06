@@ -35,3 +35,12 @@ eureka:
       defaultZone: http://discovery-service:8761/eureka/
 
     registryFetchIntervalSeconds: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  tracing:
+    sampling:
+      probability: 1.0

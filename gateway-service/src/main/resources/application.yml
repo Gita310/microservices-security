@@ -27,10 +27,14 @@ spring:
             - Path=/orders/**
 
 management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
   tracing:
     sampling:
       probability: 1.0
-
+      
   zipkin:
     tracing:
       endpoint: http://zipkin:9411/api/v2/spans

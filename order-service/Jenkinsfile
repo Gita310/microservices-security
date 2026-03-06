@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_REPO = "gita310/microservices-security"
+        IMAGE_NAME = "order-service"
+    }
+
+    stages {
+
+        stage('Build Jar') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t $DOCKERHUB_REPO:$IMAGE_NAME-${BUILD_NUMBER} ."
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh """
+                    docker login -u $USER -p $PASS
+                    docker push $DOCKERHUB_REPO:$IMAGE_NAME-${BUILD_NUMBER}
+                    """
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh """
+                kubectl set image deployment/order-service \
+                order-service=$DOCKERHUB_REPO:$IMAGE_NAME-${BUILD_NUMBER} \
+                -n microservice-security
+                """
+            }
+        }
+
+    }
+}
